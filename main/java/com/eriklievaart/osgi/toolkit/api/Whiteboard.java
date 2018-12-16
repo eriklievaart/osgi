@@ -52,7 +52,7 @@ public class Whiteboard<E> implements ServiceListener {
 	public void addListener(final SimpleServiceListener<E> listener) {
 		listeners.add(listener);
 		try {
-			new BundleWrapper(context).getServiceCollection(type).withAll(s -> {
+			new ContextWrapper(context).getServiceCollection(type).allCall(s -> {
 				log.trace("$ -> $", listener.getClass().getSimpleName(), s);
 				listener.register(s);
 			});
@@ -87,6 +87,7 @@ public class Whiteboard<E> implements ServiceListener {
 	 * Properly clean up the whiteboard.
 	 */
 	public void shutdown() {
+		log.debug("removing listener for type $", type);
 		context.removeServiceListener(this);
 	}
 }

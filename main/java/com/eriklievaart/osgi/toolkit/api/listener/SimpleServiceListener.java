@@ -39,5 +39,4 @@ public interface SimpleServiceListener<E> {
 	@SuppressWarnings("unused")
 	default void modifiedEndMatch(E service) {
 	}
-
 }

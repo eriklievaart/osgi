@@ -3,11 +3,15 @@ package com.eriklievaart.osgi.toolkit.api;
 import java.io.File;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleListener;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceListener;
 
+import com.eriklievaart.osgi.toolkit.api.listener.SimpleBundleListener;
 import com.eriklievaart.osgi.toolkit.api.listener.SimpleServiceListener;
+import com.eriklievaart.osgi.toolkit.impl.BundleListenerWrapper;
 import com.eriklievaart.osgi.toolkit.impl.OsgiFilter;
+import com.eriklievaart.osgi.toolkit.impl.ServiceCollectionImpl;
 import com.eriklievaart.osgi.toolkit.impl.ServiceListenerWrapper;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.str.Str;
@@ -15,11 +19,11 @@ import com.eriklievaart.toolkit.lang.api.str.Str;
 /**
  * Convenience class for interacting with the {@link BundleContext} without the plumbing.
  */
-public class BundleWrapper {
+public class ContextWrapper {
 
 	private final BundleContext context;
 
-	public BundleWrapper(BundleContext context) {
+	public ContextWrapper(BundleContext context) {
 		this.context = context;
 	}
 
@@ -31,7 +35,7 @@ public class BundleWrapper {
 	 * @return all matching services.
 	 */
 	public <E> ServiceCollection<E> getServiceCollection(Class<E> type) {
-		return new ServiceCollection<>(context, type);
+		return new ServiceCollectionImpl<>(context, type);
 	}
 
 	/**
@@ -47,6 +51,12 @@ public class BundleWrapper {
 	 */
 	public File getBundleParentDir() {
 		return getBundleDir().getParentFile();
+	}
+
+	public BundleListener addBundleListener(SimpleBundleListener listener) {
+		BundleListenerWrapper result = new BundleListenerWrapper(listener);
+		context.addBundleListener(result);
+		return result;
 	}
 
 	/**
