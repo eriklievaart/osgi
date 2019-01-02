@@ -12,6 +12,7 @@ import org.osgi.framework.ServiceRegistration;
 
 import com.eriklievaart.osgi.toolkit.api.listener.SimpleBundleListener;
 import com.eriklievaart.osgi.toolkit.api.listener.SimpleServiceListener;
+import com.eriklievaart.osgi.toolkit.impl.ServiceCollectionImpl;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 import com.eriklievaart.toolkit.logging.api.LogTemplate;
 
@@ -65,6 +66,10 @@ public abstract class ActivatorWrapper implements BundleActivator {
 		ServiceRegistration<E> registration = context.registerService(type, service, d);
 		services.add(registration);
 		return registration;
+	}
+
+	public <E> ServiceCollection<E> getServiceCollection(Class<E> type) {
+		return new ServiceCollectionImpl<>(context, type);
 	}
 
 	public <E> Whiteboard<E> addWhiteboardWithCleanup(Class<E> type) {
