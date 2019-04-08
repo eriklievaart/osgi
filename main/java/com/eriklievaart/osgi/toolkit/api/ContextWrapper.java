@@ -1,6 +1,7 @@
 package com.eriklievaart.osgi.toolkit.api;
 
 import java.io.File;
+import java.util.function.Consumer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleListener;
@@ -98,6 +99,16 @@ public class ContextWrapper {
 	public String getPropertyString(String key, String preset) {
 		String value = context.getProperty(key);
 		return value == null ? preset : value;
+	}
+
+	/**
+	 * Invoke the consumer with the value of the property. Only invokes the consumer if the property is configured.
+	 */
+	public void getPropertyStringOptional(String key, Consumer<String> consumer) {
+		String value = context.getProperty(key);
+		if (value != null) {
+			consumer.accept(value);
+		}
 	}
 
 	/**
