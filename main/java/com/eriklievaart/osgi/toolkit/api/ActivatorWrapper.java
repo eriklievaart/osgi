@@ -3,6 +3,7 @@ package com.eriklievaart.osgi.toolkit.api;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -30,7 +31,12 @@ public abstract class ActivatorWrapper implements BundleActivator {
 	public final void start(BundleContext bc) throws Exception {
 		this.context = bc;
 		log.info("starting bundle %", bc.getBundle().getSymbolicName());
-		init(getBundleContext());
+		try {
+			init(getBundleContext());
+		} catch (Exception e) {
+			log.error("unable to start bundle %: $", e, bc.getBundle().getSymbolicName(), e.getMessage());
+			throw e;
+		}
 	}
 
 	@Override
@@ -82,6 +88,10 @@ public abstract class ActivatorWrapper implements BundleActivator {
 		Whiteboard<E> whiteboard = addWhiteboardWithCleanup(type);
 		whiteboard.addListener(listener);
 		return whiteboard;
+	}
+
+	public <E> void onRegisterService(Class<E> type, Consumer<E> consumer) {
+		addWhiteboardWithCleanup(type).onRegister(consumer);
 	}
 
 	public void addServiceListenerWithCleanup(SimpleServiceListener<Object> listener) {

@@ -1,6 +1,7 @@
 package com.eriklievaart.osgi.toolkit.api;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -60,6 +61,22 @@ public class Whiteboard<E> implements ServiceListener {
 			listeners.remove(listener);
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * Convenience method for events that only need to be handled on registering.
+	 */
+	public void onRegister(Consumer<E> consumer) {
+		addListener(new SimpleServiceListener<E>() {
+			@Override
+			public void register(E service) {
+				consumer.accept(service);
+			}
+
+			@Override
+			public void unregistering(E service) {
+			}
+		});
 	}
 
 	@Override
