@@ -58,7 +58,7 @@ public abstract class ActivatorWrapper implements BundleActivator {
 		shutdown();
 	}
 
-	public Dictionary<String, ?> dictionary(String key, Object value) {
+	public Dictionary<String, Object> dictionary(String key, Object value) {
 		Hashtable<String, Object> map = new Hashtable<>();
 		map.put(key, value);
 		return map;
