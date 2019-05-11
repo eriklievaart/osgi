@@ -26,6 +26,10 @@ public class Activator extends ActivatorWrapper {
 					}
 				});
 			}
+
+			@Override
+			public void close() {
+			}
 		});
 	}
 }
