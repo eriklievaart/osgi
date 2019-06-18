@@ -114,6 +114,17 @@ public class ContextWrapper {
 	/**
 	 * Load a property or return the preset if the property is not available.
 	 */
+	public boolean getPropertyBoolean(String key, boolean preset) {
+		String value = context.getProperty(key);
+		if (Str.isBlank(value)) {
+			return preset;
+		}
+		return value.trim().toLowerCase().equals("true");
+	}
+
+	/**
+	 * Load a property or return the preset if the property is not available.
+	 */
 	public int getPropertyInt(String key, int preset) {
 		String value = context.getProperty(key);
 		if (Str.isBlank(value)) {
