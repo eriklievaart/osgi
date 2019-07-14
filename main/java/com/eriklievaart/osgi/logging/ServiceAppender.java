@@ -14,7 +14,7 @@ public class ServiceAppender extends AbstractAppender {
 	}
 
 	@Override
-	public void append(LogRecord record) {
+	public void write(LogRecord record) {
 		sc.allCall(appender -> {
 			try {
 				appender.append(record);
