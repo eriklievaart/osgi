@@ -24,7 +24,7 @@ public class Activator extends ActivatorWrapper {
 	private static final String ACTIVE = "true";
 	private static final String SERVICE_PROPERTY = "com.eriklievaart.osgi.logging.service";
 	private static final String CONSOLE_PROPERTY = "com.eriklievaart.osgi.logging.console";
-	private static final String FORMAT_PROPERTY = "com.eriklievaart.osgi.logging.format";
+	private static final String FORMAT_PROPERTY = "com.eriklievaart.osgi.logging.date";
 	private static final String FILE_PROPERTY = "com.eriklievaart.osgi.logging.file";
 	private static final String FILE_LEVEL_PROPERTY = "com.eriklievaart.osgi.logging.file.level";
 
