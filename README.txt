@@ -1,17 +1,13 @@
 
-#h3 OSGI properties
-# configure zip file containing migration scripts, for auto updating database
-com.eriklievaart.postgres.migrate.zip=/data/hu/humigrate.zip
-# configure script dir for manually running scripts (development)
-com.eriklievaart.postgres.script.dir=/home/eazy/Development/git/humigrate/main/static/zip
+# osgi properties with their defaults
 
-#h3 connection settings
-# configure the database connection settings in the following file:
-/data/config/postgres.properties
-
-# the following properties are available (defaults after '=')
-host=localhost
-database=application
-user=postgres
-password=Ch@ng3m3
-
+# enable osgi logging agent
+com.eriklievaart.osgi.logging.service=true
+# log to console
+com.eriklievaart.osgi.logging.console=true
+# date format used in logging (default = no date)
+com.eriklievaart.osgi.logging.date=yyyy-MM-dd HH:mm:ss
+# path to log file (default = only log to console)
+com.eriklievaart.osgi.logging.file=
+# minimum level for file logger
+com.eriklievaart.osgi.logging.file.level=TRACE
