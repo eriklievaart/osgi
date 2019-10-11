@@ -1,7 +1,6 @@
 package com.eriklievaart.osgi.logging;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -14,7 +13,7 @@ import com.eriklievaart.toolkit.lang.api.str.Str;
 import com.eriklievaart.toolkit.logging.api.LogConfig;
 import com.eriklievaart.toolkit.logging.api.appender.Appender;
 import com.eriklievaart.toolkit.logging.api.appender.ConsoleAppender;
-import com.eriklievaart.toolkit.logging.api.appender.SimpleFileAppender;
+import com.eriklievaart.toolkit.logging.api.appender.RotatingFileAppender;
 import com.eriklievaart.toolkit.logging.api.format.DatedFormatter;
 import com.eriklievaart.toolkit.logging.api.format.SimpleFormatter;
 import com.eriklievaart.toolkit.logging.api.level.LogLevelTool;
@@ -67,13 +66,9 @@ public class Activator extends ActivatorWrapper {
 		Level level = LogLevelTool.toLevel(wrapper.getPropertyString(FILE_LEVEL_PROPERTY, "TRACE"));
 
 		wrapper.getPropertyStringOptional(FILE_PROPERTY, path -> {
-			try {
-				SimpleFileAppender appender = new SimpleFileAppender(new File(path));
-				appender.setLevel(level);
-				appenders.add(appender);
-			} catch (FileNotFoundException e) {
-				throw new RuntimeException(e);
-			}
+			RotatingFileAppender appender = new RotatingFileAppender(new File(path));
+			appender.setLevel(level);
+			appenders.add(appender);
 		});
 	}
 }
