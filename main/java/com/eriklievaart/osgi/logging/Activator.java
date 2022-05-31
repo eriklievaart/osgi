@@ -23,6 +23,7 @@ public class Activator extends ActivatorWrapper {
 	private static final String ACTIVE = "true";
 	private static final String SERVICE_PROPERTY = "com.eriklievaart.osgi.logging.service";
 	private static final String CONSOLE_PROPERTY = "com.eriklievaart.osgi.logging.console";
+	private static final String CONSOLE_LEVEL_PROPERTY = "com.eriklievaart.osgi.logging.console.level";
 	private static final String FORMAT_PROPERTY = "com.eriklievaart.osgi.logging.date";
 	private static final String FILE_PROPERTY = "com.eriklievaart.osgi.logging.file";
 	private static final String FILE_LEVEL_PROPERTY = "com.eriklievaart.osgi.logging.file.level";
@@ -44,7 +45,9 @@ public class Activator extends ActivatorWrapper {
 
 	private void installFormat(ContextWrapper wrapper) {
 		wrapper.getPropertyStringOptional(FORMAT_PROPERTY, format -> {
-			LogConfig.setDefaultFormatter(new DatedFormatter(format, new SimpleFormatter()));
+			if (Str.notBlank(format)) {
+				LogConfig.setDefaultFormatter(new DatedFormatter(format, new SimpleFormatter()));
+			}
 		});
 	}
 
@@ -56,9 +59,13 @@ public class Activator extends ActivatorWrapper {
 	}
 
 	private void addConsoleAppender(ContextWrapper wrapper, List<Appender> appenders) {
+		Level level = LogLevelTool.toLevel(wrapper.getPropertyString(CONSOLE_LEVEL_PROPERTY, "TRACE"));
+
 		String property = wrapper.getPropertyString(CONSOLE_PROPERTY, ACTIVE);
 		if (Str.isEqual(property, ACTIVE)) {
-			appenders.add(new ConsoleAppender());
+			ConsoleAppender appender = new ConsoleAppender();
+			appender.setLevel(level);
+			appenders.add(appender);
 		}
 	}
 
