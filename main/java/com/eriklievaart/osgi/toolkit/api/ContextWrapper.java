@@ -94,6 +94,13 @@ public class ContextWrapper {
 	}
 
 	/**
+	 * Tests whether a property is set or not.
+	 */
+	public boolean hasProperty(String key) {
+		return context.getProperty(key) != null;
+	}
+
+	/**
 	 * Load a property or return the preset if the property is not available.
 	 */
 	public String getPropertyString(String key, String preset) {
