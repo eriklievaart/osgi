@@ -26,7 +26,7 @@ public class ServiceCollectionImpl<E> implements ServiceCollection<E> {
 	private String filter;
 
 	public ServiceCollectionImpl(BundleContext context, Class<E> type) {
-		Check.notNull(context, type);
+		Check.noneNull(context, type);
 		this.context = context;
 		this.type = type;
 		this.filter = String.format("(objectclass=%s)", type.getName());

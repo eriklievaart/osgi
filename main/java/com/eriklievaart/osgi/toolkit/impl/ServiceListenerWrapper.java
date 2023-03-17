@@ -13,7 +13,7 @@ public class ServiceListenerWrapper<E> implements ServiceListener {
 	private SimpleServiceListener<E> delegate;
 
 	public ServiceListenerWrapper(BundleContext context, SimpleServiceListener<E> delegate) {
-		Check.notNull(context, delegate);
+		Check.noneNull(context, delegate);
 		this.context = context;
 		this.delegate = delegate;
 	}
