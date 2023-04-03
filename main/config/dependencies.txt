@@ -1,6 +1,4 @@
 
-[compile]
-
 [provided]
 toolkit-lang @local @snapshot
 toolkit-logging @local @snapshot
