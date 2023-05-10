@@ -3,6 +3,7 @@ package com.eriklievaart.osgi.toolkit.api;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import org.osgi.framework.BundleActivator;
@@ -68,8 +69,8 @@ public abstract class ActivatorWrapper implements BundleActivator {
 		return addServiceWithCleanup(type, service, new Hashtable<>());
 	}
 
-	public <E> ServiceRegistration<E> addServiceWithCleanup(Class<E> type, E service, Dictionary<String, ?> d) {
-		ServiceRegistration<E> registration = context.registerService(type, service, d);
+	public <E> ServiceRegistration<E> addServiceWithCleanup(Class<E> type, E service, Map<String, ?> map) {
+		ServiceRegistration<E> registration = context.registerService(type, service, new Hashtable<>(map));
 		services.add(registration);
 		return registration;
 	}
