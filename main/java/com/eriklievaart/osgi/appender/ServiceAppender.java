@@ -1,4 +1,4 @@
-package com.eriklievaart.osgi.logging;
+package com.eriklievaart.osgi.appender;
 
 import java.util.logging.LogRecord;
 
